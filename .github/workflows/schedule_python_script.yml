@@ -4,6 +4,7 @@ on:
   schedule:
     # Runs at 3 PM every day
     - cron: '0 15 * * *'
+  workflow_dispatch:  # <-- This enables manual triggering
 
 jobs:
   build:
@@ -26,3 +27,4 @@ jobs:
 
     - name: Run Python script
       run: python execution.py
+
