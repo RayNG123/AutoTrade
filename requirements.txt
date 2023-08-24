@@ -5,3 +5,4 @@ tqdm==4.66.1
 scikit-learn==1.2.2
 pytz==2023.3
 finta==1.3
+ta==0.10.2
