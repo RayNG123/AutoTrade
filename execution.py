@@ -121,7 +121,6 @@ def main(args):
     direction = trading_decision(prediction,len(prediction.index)) #-1 for short, 1 for long, 0 for doing nothing
     
     pos = GetPosition(trading_client)
-    if pos.shape[
     current_position = float(pos[pos['Symbol']==args.stock]['Quantity'].values[0])
     print('current position in', args.stock, 'is', current_position,'shares' )
     if direction == 1 and current_position > 0: #stay long position
