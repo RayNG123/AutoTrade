@@ -6,7 +6,7 @@ from alpaca.trading.enums import OrderSide, TimeInForce
 import argparse
 
 
-from data_donwnloader import *
+from data_downloader import *
 from price_prediction import *
 from trading_strategy import *
 
