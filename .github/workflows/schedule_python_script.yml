@@ -2,13 +2,12 @@ name: Run Python script
 
 on:
   schedule:
-    # Runs at 3 PM every day
-    - cron: '0 15 * * *'
+    # Runs at 3:30 PM ET (8:30 PM UTC) from Monday to Friday
+    - cron: '30 20 * * 1-5'
   workflow_dispatch:  # <-- This enables manual triggering
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -27,4 +26,3 @@ jobs:
 
     - name: Run Python script
       run: python execution.py
-
