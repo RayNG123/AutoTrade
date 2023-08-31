@@ -18,7 +18,7 @@ parser = argparse.ArgumentParser(description="argument parser for preprocessing 
 
 #timing intervals
 parser.add_argument("--start_date", type=str, default = None, help="start date of all data")
-parser.add_argument("--days", type=int, default = 500, help="number of days needed")
+parser.add_argument("--days", type=int, default = 350, help="number of days needed")
 parser.add_argument("--room_na", type=int, default = 200, help="room of na days")
 parser.add_argument("--interval", type=str, default = "1d", choices=["1d","1wk","1mo"], help="choose an interval")
 parser.add_argument("--end_date", type=str, default = str(date.today()) , help="end date of all data")
@@ -72,7 +72,7 @@ parser.add_argument("--model_param", default = {}, help = 'model hyperparamters'
 parser.add_argument("--api_id", default = 'PKSWRK5V719NVCCZ2NTZ', help="api id for alpaca")
 parser.add_argument("--api_secret_key", default = 'tfbPVTZcicqFhtTKBtCrCsehtIbgyfP5gnqdzAyz', help = 'secret api key for alpaca')
 
-def GetPosition():
+def GetPosition(trading_client):
     symbol_list = []
     quantity_list = []
     # Get a list of all of our positions.
@@ -87,7 +87,7 @@ def GetPosition():
     
     return df
 
-def PlaceOrderBUY(ticker = "AAPL", quantity = 1):
+def PlaceOrderBUY(trading_client, ticker = "AAPL", quantity = 1):
     market_order_data = MarketOrderRequest(
                     symbol=ticker,
                     qty=quantity,
@@ -99,7 +99,7 @@ def PlaceOrderBUY(ticker = "AAPL", quantity = 1):
                 order_data=market_order_data
                )
 
-def PlaceOrderSELL(ticker = "AAPL", quantity = 1):
+def PlaceOrderSELL(trading_client, ticker = "AAPL", quantity = 1):
     market_order_data = MarketOrderRequest(
                     symbol=ticker,
                     qty=quantity,
@@ -119,7 +119,7 @@ def main(args):
     prediction = predict(args,data)
     direction = trading_decision(prediction,len(prediction.index)) #-1 for short, 1 for long, 0 for doing nothing
     
-    pos = GetPosition()
+    pos = GetPosition(trading_client)
     current_position = float(pos[pos['Symbol']==args.stock]['Quantity'].values[0])
     print('current position in', args.stock, 'is', current_position,'shares' )
     if direction == 1 and current_position > 0: #stay long position
@@ -130,17 +130,17 @@ def main(args):
         
     elif direction == 1 and current_position < 0: #close short position, open long position
         print('close short position')
-        PlaceOrderBUY(ticker = args.stock, quantity = abs(current_position))
+        PlaceOrderBUY(trading_client = trading_client, ticker = args.stock, quantity = abs(current_position))
         time.sleep(5)
         print('open long position')
-        PlaceOrderBUY(ticker = args.stock, quantity = abs(current_position))
+        PlaceOrderBUY(trading_client = trading_client,ticker = args.stock, quantity = abs(current_position))
         
     elif direction == -1 and current_position > 0: #close long position, open short position
         print('close long position')
-        PlaceOrderSELL(ticker = args.stock, quantity = abs(current_position))
+        PlaceOrderSELL(trading_client = trading_client,ticker = args.stock, quantity = abs(current_position))
         time.sleep(5)
         print('open short position')
-        PlaceOrderSELL(ticker = args.stock, quantity = abs(current_position))
+        PlaceOrderSELL(trading_client = trading_client,ticker = args.stock, quantity = abs(current_position))
     
     else: 
         print('error: except condition of no trading')
@@ -149,5 +149,7 @@ def main(args):
 if __name__ == '__main__':
     args = parser.parse_args([])
     main(args)
+
+
 
 
