@@ -1,11 +1,15 @@
-#!pip install finta
-#!pip install yfinance
-#!pip install ta
-
-from data_downloader import data_downloader
-from price_prediction import predict
+import pandas as pd
+import numpy as np
+from alpaca.trading.client import TradingClient
+from alpaca.trading.requests import MarketOrderRequest
+from alpaca.trading.enums import OrderSide, TimeInForce
 import argparse
-from datetime import datetime, timedelta, date, time
+
+
+from data_preparation import *
+from price_prediction import *
+from trading_strategy import *
+
 
 ###########################################Set hyperparameters###################################################
 
@@ -64,10 +68,86 @@ parser.add_argument("--window_size", type = int, default = 20, help="using seque
 parser.add_argument("--model", default = 'Conv', help="model to use for training")
 parser.add_argument("--model_param", default = {}, help = 'model hyperparamters')
 
+#trading apis
+parser.add_argument("--api_id", default = 'PKSWRK5V719NVCCZ2NTZ', help="api id for alpaca")
+parser.add_argument("--api_secret_key", default = 'tfbPVTZcicqFhtTKBtCrCsehtIbgyfP5gnqdzAyz', help = 'secret api key for alpaca')
+
+def GetPosition():
+    symbol_list = []
+    quantity_list = []
+    # Get a list of all of our positions.
+    portfolio = trading_client.get_all_positions()
+
+    # Print the quantity of shares for each position.
+    for position in portfolio:
+        symbol_list.append(position.symbol)
+        quantity_list.append(position.qty)
+    dict = {'Symbol':symbol_list, 'Quantity':quantity_list}
+    df = pd.DataFrame(dict)
+    
+    return df
+
+def PlaceOrderBUY(ticker = "AAPL", quantity = 1):
+    market_order_data = MarketOrderRequest(
+                    symbol=ticker,
+                    qty=quantity,
+                    side=OrderSide.BUY,
+                    time_in_force=TimeInForce.GTC
+                    )
+    
+    market_order = trading_client.submit_order(
+                order_data=market_order_data
+               )
+
+def PlaceOrderSELL(ticker = "AAPL", quantity = 1):
+    market_order_data = MarketOrderRequest(
+                    symbol=ticker,
+                    qty=quantity,
+                    side=OrderSide.SELL,
+                    time_in_force=TimeInForce.GTC
+                    )
+    
+    market_order = trading_client.submit_order(
+                order_data=market_order_data
+               )
+    
 def main(args):
-  data = data_downloader(args)
-  prediction = predict(args,data)
+    trading_client = TradingClient(args.api_id, args.api_secret_key, paper=True)
+
+    #data preparation, traning, strategy
+    data = data_downloader(args)
+    prediction = predict(args,data)
+    direction = trading_decision(prediction,len(prediction.index)) #-1 for short, 1 for long, 0 for doing nothing
+    
+    pos = GetPosition()
+    current_position = float(pos[pos['Symbol']==args.stock]['Quantity'].values[0])
+    print('current position in', args.stock, 'is', current_position,'shares' )
+    if direction == 1 and current_position > 0: #stay long position
+        print('stay long position')
+        
+    elif direction == -1 and current_position < 0: #stay short position
+        print('stay short position')
+        
+    elif direction == 1 and current_position < 0: #close short position, open long position
+        print('close short position')
+        PlaceOrderBUY(ticker = args.stock, quantity = abs(current_position))
+        time.sleep(5)
+        print('open long position')
+        PlaceOrderBUY(ticker = args.stock, quantity = abs(current_position))
+        
+    elif direction == -1 and current_position > 0: #close long position, open short position
+        print('close long position')
+        PlaceOrderSELL(ticker = args.stock, quantity = abs(current_position))
+        time.sleep(5)
+        print('open short position')
+        PlaceOrderSELL(ticker = args.stock, quantity = abs(current_position))
+    
+    else: 
+        print('error: except condition of no trading')
+
 
 if __name__ == '__main__':
-  args = parser.parse_args([])
-  main(args)
+    args = parser.parse_args([])
+    main(args)
+
+
