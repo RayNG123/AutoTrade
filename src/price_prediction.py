@@ -4,7 +4,7 @@ import argparse
 import os
 from tqdm import tqdm
 from sklearn.preprocessing import MinMaxScaler,StandardScaler
-from models import *
+from src.models import *
 
 def predict(args,main_data):
   #read data
