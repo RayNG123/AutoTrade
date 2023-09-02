@@ -7,9 +7,9 @@ import argparse
 import time
 
 
-from data_downloader import *
-from price_prediction import *
-from trading_strategy import *
+from src.data_downloader import *
+from src.price_prediction import *
+from src.trading_strategy import *
 
 
 ###########################################Set hyperparameters###################################################
