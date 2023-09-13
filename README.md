@@ -23,9 +23,20 @@ By synergizing these elements, the project delivers a robust, adaptable, and ful
 ## Prerequisites
 
 - Python 3.x
-- Alpaca trading account
 - pandas
 - numpy
+- yfinance
+- tqdm
+- scikit-learn
+- pytz
+- finta
+- ta
+- keras
+- tensorflow 
+- alpaca-py
+- matplotlib
+- tqdm
+- scipy
 
 ## Installation
 
