@@ -1,4 +1,4 @@
-# AutoTrade: Stock Trading Automation with Alpaca API
+# AutoTrade: Stock Trading Automation with Machine Learning and API Trading
 
 ## Overview
 
