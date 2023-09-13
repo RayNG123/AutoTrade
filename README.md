@@ -38,6 +38,7 @@ pip install -r requirements.txt
 1. `data_downloader`: Responsible for downloading stock data.
 2. `price_prediction`: Uses machine learning models to predict stock prices.
 3. `trading_strategy`: Determines trading decisions based on price predictions and other indicators.
+4. `models`: contains a set of machine learning models to predict stock prices
 
 ## How to Use
 
@@ -54,6 +55,16 @@ Example usage:
 \`\`\`bash
 python execution.py --start_date=2022-01-01 --days=350 --stock=AAPL
 \`\`\`
+
+## GitHub Actions Workflow
+
+### Automated Trading Schedule
+
+This project uses GitHub Actions to automate the trading script. The workflow is scheduled to run at 3:30 PM ET (8:30 PM UTC) from Monday to Friday.
+
+### Workflow Configuration
+
+The `.github/workflows` directory contains the YAML configuration file for the workflow.
 
 **Important:** The Alpaca API ID and secret key are currently hardcoded in the `execution.py` script. For security reasons, it's advisable to use environment variables to store these credentials.
 
