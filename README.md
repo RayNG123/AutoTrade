@@ -80,13 +80,15 @@ This project uses GitHub Actions to automate the trading script. The workflow is
 
 The `.github/workflows` directory contains the YAML configuration file for the workflow.
 
-**Important:**  Please register your own Alpaca API ID and Secret key for API trading services
 
-## Trading Functions
+
+## API Trading Functions
 
 - `GetPosition(trading_client)`: Retrieves the current position in the given stock.
 - `PlaceOrderBUY(trading_client, ticker, quantity)`: Places a buy order.
 - `PlaceOrderSELL(trading_client, ticker, quantity)`: Places a sell order.
+
+**Important:**  Please register your own Alpaca API ID and Secret key for API trading services
 
 ## License
 
