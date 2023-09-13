@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project aims to automate stock trading using machine learning models for predictive analytics and Alpaca API for executing trades. The application consists of various components:
+This project aims to automate stock trading using machine learning models for predictive analytics and Alpaca API for executing trades. It incorporates a variety of trading indicators and strategies to make buy/sell decisions. The project consists of various modules including data downloading, price prediction, and trading strategy implementation.
 
 **Note: This project is intended for educational purposes and should not be used as financial advice.**
 
