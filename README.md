@@ -2,7 +2,21 @@
 
 ## Overview
 
-This project aims to automate stock trading using machine learning models for predictive analytics and Alpaca API for executing trades. The system employs machine learning models trained to understand and predict stock price movements. These models can be either for regression or classification tasks. They are capable of dynamically retraining based on new data and can be fine-tuned for various trading strategies. It incorporates a variety of trading indicators and strategies to make buy/sell decisions. The project consists of various modules including data downloading, price prediction, and trading strategy implementation.
+This project aims to fully automate stock trading by integrating machine learning models with the Alpaca API for trade execution. Designed to function as a comprehensive trading system, it is built on a modular architecture that includes distinct components for data downloading, stock price prediction, and trading strategy implementation.
+
+### Machine Learning Models
+The system employs specialized machine learning models for predictive analytics. These models, which can be configured for either regression or classification tasks, are designed to understand and forecast stock price movements. Additionally, they can dynamically retrain based on new data and are highly customizable to align with various trading strategies.
+
+### Alpaca API Integration
+The Alpaca API is integral to the project, serving as the execution engine for trades. It enables the system to place market orders, manage portfolios, and acquire real-time or historical market data across a variety of stock tickers.
+
+### Trading Indicators and Strategies
+The project leverages a plethora of trading indicators such as RSI, MACD, and EMA to assist the machine learning models in making more precise buy/sell decisions. These indicators are configurable, providing flexibility to adapt to different trading strategies.
+
+### GitHub Actions for Automation
+Thanks to GitHub Actions, the entire trading workflow—from data acquisition and price prediction to order execution—is automated. The system is set to operate from Monday to Friday at 3:30 PM ET, ensuring a consistent trading schedule.
+
+By synergizing these elements, the project delivers a robust, adaptable, and fully automated stock trading system.
 
 **Note: This project is intended for educational purposes and should not be used as financial advice.**
 
