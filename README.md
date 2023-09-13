@@ -1,4 +1,4 @@
-# AutoTrade: Stock Trading Automation with Machine Learning and API Trading
+# AutoTrade: Stock Trading Automation with ML and API Trading
 
 ## Overview
 
