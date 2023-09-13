@@ -65,15 +65,81 @@ pip install -r requirements.txt
 3. `trading_strategy`: Determines trading decisions based on price predictions and other indicators.
 4. `models`: contains a set of machine learning models to predict stock prices
 
-## How to Set up Hyperparamters
+# Configuration Parameters
 
-The main file is `execution.py`. You can run it via the command line and pass various arguments to customize your trading strategy. Below are some of the options:
+The script provides a set of command-line arguments to customize its behavior. Below are important parameters with a detailed explanation for each.
 
-- `--start_date`: Start date for historical data
-- `--days`: Number of days for which data is needed
-- `--stock`: The stock ticker symbol (e.g., 'AAPL')
-- `--need_log`: Log transformation flag
-- ... (add more based on your argparse setup)
+## Timing Intervals
+
+- `--start_date`: Specifies the start date for the data. Format should be a string (e.g., "2020-01-01"). Default is `None`.
+- `--days`: Number of days for which data is needed. Default is `350`.
+- `--room_na`: Number of days for padding missing data. Default is `200`.
+- `--interval`: The time interval for data. Choices are `1d`, `1wk`, `1mo`. Default is `1d`.
+- `--end_date`: Specifies the end date for the data. Default is today's date.
+
+## Stock Data
+
+- `--stock`: Ticker symbol of the stock to consider for data download. Default is `AAPL`.
+
+## Log Indicators
+
+- `--need_log`: Flag to determine if log transformation is needed. Default is `False`.
+
+## Technical Indicators
+
+- `--need_ta`: Flag to check if technical indicators like RSI, STOCH are needed. Default is `False`.
+- `--choices_ta`: List of technical indicators to consider. Default is `['RSI','STOCH']`.
+
+## MACD Indicators
+
+- `--need_macd`: Flag to check if MACD indicators are needed. Default is `False`.
+- `--columns_macd`: Target column for MACD computation. Default is `['Close']`.
+- `--short_span`: Short span period for MACD. Default is `12`.
+- `--long_span`: Long span period for MACD. Default is `26`.
+- `--signal_span`: Signal span for MACD. Default is `9`.
+
+## EMA Indicators
+
+- `--need_ema`: Flag to check if EMA indicators are needed. Default is `False`.
+- `--days_ema`: Days for which EMA is calculated. Default is `[5,15,25,50]`.
+- `--columns_ema`: Target column for EMA computation. Default is `['Close']`.
+
+## Previous Day Indicators
+
+- `--need_prev`: Flag to check if previous day indicators are needed. Default is `False`.
+- `--columns_prev`: Target column for previous day indicators. Default is `['Close']`.
+- `--days_prev`: Number of previous days to consider. Default is `20`.
+
+## Backtesting
+
+- `--shift_target`: Flag to check if shifting the target for backtesting is needed. Default is `False`.
+
+## Machine Learning Settings
+
+- `--regression`: Flag for regression or classification tasks. Default is `False`.
+- `--training_size`: Number of days used for training the model. Default is `300`.
+- `--training_interval`: Interval to train a new model for each testing day. Default is `1`.
+
+## Data Preprocessing
+
+- `--return_normalization`: Flag to enable return rate normalization. Default is `True`.
+- `--min_max_normalization`: Flag to enable Min-Max normalization. Default is `True`.
+- `--standard_normalization`: Flag to enable standard normalization. Default is `False`.
+
+## Sequential Model
+
+- `--sequential`: Flag to specify if a sequential model is used. Default is `True`.
+- `--window_size`: Window size for the sequential model. Default is `20`.
+- `--model`: The model to use for training. Default is `Conv`.
+- `--model_param`: Model hyperparameters. Default is an empty dictionary `{}`.
+
+## API Keys for Alpaca
+
+- `--api_id`: Your API ID for the Alpaca service.
+- `--api_secret_key`: Your API secret key for the Alpaca service.
+
+> **Note**: Please don't publish your API keys (`api_id`, `api_secret_key`) in the README or any public repository for security reasons.
+
 
 Example usage:
 
