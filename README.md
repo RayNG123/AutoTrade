@@ -38,7 +38,7 @@ git clone https://github.com/yourusername/yourrepository.git
 Navigate to the project directory:
 
 \`\`\`bash
-cd yourrepository
+cd your repository
 \`\`\`
 
 Install the required Python packages:
