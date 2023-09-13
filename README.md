@@ -40,7 +40,7 @@ pip install -r requirements.txt
 3. `trading_strategy`: Determines trading decisions based on price predictions and other indicators.
 4. `models`: contains a set of machine learning models to predict stock prices
 
-## How to Use
+## How to Set up Hyperparamters
 
 The main file is `execution.py`. You can run it via the command line and pass various arguments to customize your trading strategy. Below are some of the options:
 
@@ -60,15 +60,15 @@ python execution.py --start_date=2022-01-01 --days=350 --stock=AAPL
 
 ### Automated Trading Schedule
 
-This project uses GitHub Actions to automate the trading script. The workflow is scheduled to run at 3:30 PM ET (8:30 PM UTC) from Monday to Friday.
+This project uses GitHub Actions to automate the trading script. The workflow is scheduled to run at 3:30 PM ET (8:30 PM UTC) from Monday to Friday. After customizing your trading strategy and hyperparamters in execution.py, Github Actions automates the trading process based on predetermined schedule on each trading day.
 
 ### Workflow Configuration
 
 The `.github/workflows` directory contains the YAML configuration file for the workflow.
 
-**Important:** The Alpaca API ID and secret key are currently hardcoded in the `execution.py` script. For security reasons, it's advisable to use environment variables to store these credentials.
+**Important:**  Please register your own Alpaca API ID and Secret key for API trading services
 
-## Functions
+## Trading Functions
 
 - `GetPosition(trading_client)`: Retrieves the current position in the given stock.
 - `PlaceOrderBUY(trading_client, ticker, quantity)`: Places a buy order.
